@@ -4,6 +4,9 @@ const expHbs = require('express-handlebars')
 const Sequelize = require('sequelize')
 const path = require('path')
 
+//--- Routes add
+const homeRoute = require('./routes/index')
+
 const PORT = process.env.PORT || 3000     
 
 const app = new express()
