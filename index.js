@@ -6,6 +6,9 @@ const path = require('path')
 
 //--- Routes add
 const homeRoute = require('./routes/index')
+const addRoute = require('./routes/add')
+const coursesRoute = require('./routes/courses')
+const cardRoute = require('./routes/card')
 
 const PORT = process.env.PORT || 3000     
 
@@ -28,10 +31,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
+//routes use
+app.use('/',homeRoute)
+app.use('/add',addRoute)
+app.use('/card',cardRoute)
+app.use('/courses',coursesRoute)
 
-app.get('/',(req,res)=>{
-    res.render("index")
-})
+
+
 
 app.listen(PORT,()=>{
   console.log(`listening on port ${PORT}`)
