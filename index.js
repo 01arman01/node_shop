@@ -7,7 +7,7 @@ const methodOverride = require('method-override')
 
 //--sessions
 const session = require("express-session")
-const sequelizeSession = require('connect-session-sequelize')(session.Store);
+const SequelizeStore= require('connect-session-sequelize')(session.Store);
 
 
 
@@ -20,6 +20,13 @@ const coursesRoute = require('./routes/courses')
 const cardRoute = require('./routes/card')
 
 const PORT = process.env.PORT || 3000     
+
+const usRoute = (arr)=>{
+  arr.map((i)=>{
+    app.use(i[0],i[1])
+  })
+}
+
 
 const app = new express()
 const hbs = expHbs.create({
@@ -44,7 +51,7 @@ app.use(methodOverride('_method'))
 app.use(session({
   secret:"some secret value",
   resave:false,
-  store: new Sequelizestore({
+  store: new SequelizeStore({
     db:connection
   }),
   saveUninitialized:false,
@@ -58,15 +65,16 @@ connection.sync({
 })
 .then(()=>{
   app.listen(PORT,()=>{
-    console.log(`listening on port ${PORT}`)
+    console.log(`http://localhost:${PORT}/`)
   })
 })
 .then(()=>{
    //routes use
-app.use('/',homeRoute)
-app.use('/add',addRoute)
-app.use('/card',cardRoute)
-app.use('/courses',coursesRoute)
+// app.use('/',homeRoute)
+// app.use('/add',addRoute)
+// app.use('/card',cardRoute)
+// app.use('/courses',coursesRoute)
+usRoute([['/',homeRoute],['/add',addRoute],['/card',cardRoute],['/courses',coursesRoute]])
 })
 .catch(err=>{
   console.error(err)
