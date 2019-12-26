@@ -1,6 +1,4 @@
 const Sequelize = require('sequelize')
-
-
 const DB_NAME = "scraper"
 const USER_NAME = "postgres"
 const PASSWORD = "root"

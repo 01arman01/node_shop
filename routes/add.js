@@ -1,6 +1,6 @@
 const {Router} = require('express')
 const router = new Router()
-
+const Course = require('../models/course')
 router.get('/',(req,res)=>{
     res.render('add',{
         isAdd:true
@@ -10,14 +10,17 @@ router.get('/',(req,res)=>{
 
 
 router.post('/',(req,res)=>{
-    const name = req.body.title
+    const title = req.body.title
     const price = req.body.price
-    const url = req.body.img
-   console.log({
-       "name":name,
-       "price":price,
-       "url":url
-   });
+    const img = req.body.img
+    Course.create({
+       title:title,
+       price:price,
+       img:img,
+       userId:1
+
+    })
+
    
     res.status(200).json({
         message:"created"

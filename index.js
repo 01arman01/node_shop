@@ -11,8 +11,12 @@ const SequelizeStore= require('connect-session-sequelize')(session.Store);
 
 
 
-
+//--- Utils
 const connection = require('./utils/connection')
+
+//--- Models
+const User = require('./models/user')
+
 //--- Routes add
 const homeRoute = require('./routes/index')
 const addRoute = require('./routes/add')
@@ -27,8 +31,11 @@ const usRoute = (arr)=>{
   })
 }
 
-
 const app = new express()
+
+app.use(methodOverride('_method'))
+
+
 const hbs = expHbs.create({
     defaultLayout:"main",
     extname:"hbs"
@@ -45,7 +52,7 @@ app.use(express.static(path.join(__dirname,'public')))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(methodOverride('_method'))
+
 
 
 app.use(session({
@@ -61,7 +68,7 @@ app.use(session({
 
 
 connection.sync({
-  force:true
+  // force:true
 })
 .then(()=>{
   app.listen(PORT,()=>{
